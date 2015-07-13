@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.has_rdoc = true
 
   s.add_dependency 'htmlentities', '~> 4.3'
+  s.add_dependency 'xml-write-stream', '~> 1.0.0'
 
   s.require_path = 'lib'
   s.files = Dir["{lib,spec}/**/*", "Gemfile", "History.txt", "README.md", "Rakefile", "rosette-serializer-xml.gemspec"]
