@@ -32,12 +32,10 @@ describe XmlSerializer::AndroidSerializer do
       |
         <?xml version="1.0" encoding="UTF-8"?>
         <resources>
-            <string name="foo">
-                "bar"
-            </string>
+            <string name="foo">bar</string>
         </resources>
       EOM
-    ))
+    ).strip)
   end
 
   it 'detects and writes plurals' do
@@ -51,16 +49,12 @@ describe XmlSerializer::AndroidSerializer do
         <?xml version="1.0" encoding="UTF-8"?>
         <resources>
             <plurals name="horses">
-                <item quantity="one">
-                    "There is one horse"
-                </item>
-                <item quantity="other">
-                    "There are %d horses"
-                </item>
+                <item quantity="one">There is one horse</item>
+                <item quantity="other">There are %d horses</item>
             </plurals>
         </resources>
       EOM
-    ))
+    ).strip)
   end
 
   it 'detects and writes arrays in any order' do
@@ -76,22 +70,14 @@ describe XmlSerializer::AndroidSerializer do
         <?xml version="1.0" encoding="UTF-8"?>
         <resources>
             <string-array name="captains">
-                <item>
-                    "Janeway"
-                </item>
-                <item>
-                    "Kirk"
-                </item>
-                <item>
-                    "Picard"
-                </item>
-                <item>
-                    "Sisko"
-                </item>
+                <item>Janeway</item>
+                <item>Kirk</item>
+                <item>Picard</item>
+                <item>Sisko</item>
             </string-array>
         </resources>
       EOM
-    ))
+    ).strip)
   end
 
   it "doesn't escape entities" do
@@ -103,12 +89,10 @@ describe XmlSerializer::AndroidSerializer do
       |
         <?xml version="1.0" encoding="UTF-8"?>
         <resources>
-            <string name="states">
-                "Alaska & Hawai'i"
-            </string>
+            <string name="states">Alaska &amp; Hawai\\'i</string>
         </resources>
       EOM
-    ))
+    ).strip)
   end
 
   it 'escapes double quotes' do
@@ -120,12 +104,10 @@ describe XmlSerializer::AndroidSerializer do
       |
         <?xml version="1.0" encoding="UTF-8"?>
         <resources>
-            <string name="wow">
-                "And I said \\"cool\\""
-            </string>
+            <string name="wow">And I said \\"cool\\"</string>
         </resources>
       EOM
-    ))
+    ).strip)
   end
 
   it 'writes a mixture of all types of string' do
@@ -141,27 +123,17 @@ describe XmlSerializer::AndroidSerializer do
       |
         <?xml version="1.0" encoding="UTF-8"?>
         <resources>
-            <string name="justastring">
-                "I'm very basic"
-            </string>
+            <string name="justastring">I\\'m very basic</string>
             <plurals name="justaplural">
-                <item quantity="many">
-                    "Many plurals"
-                </item>
-                <item quantity="one">
-                    "One plural"
-                </item>
+                <item quantity="many">Many plurals</item>
+                <item quantity="one">One plural</item>
             </plurals>
             <string-array name="justanarray">
-                <item>
-                    "First in line"
-                </item>
-                <item>
-                    "Second in line"
-                </item>
+                <item>First in line</item>
+                <item>Second in line</item>
             </string-array>
         </resources>
       EOM
-    ))
+    ).strip)
   end
 end
