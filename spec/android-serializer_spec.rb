@@ -110,6 +110,21 @@ describe XmlSerializer::AndroidSerializer do
     ).strip)
   end
 
+  it 'escapes double quotes at the beginning of a string' do
+    result = serialize do
+      serializer.write_key_value('wow', '"Elvis" is cool')
+    end
+
+    expect(result).to eq(YAML.load(<<-EOM
+      |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <resources>
+            <string name="wow">\\"Elvis\\" is cool</string>
+        </resources>
+      EOM
+    ).strip)
+  end
+
   it 'writes a mixture of all types of string' do
     result = serialize do
       serializer.write_key_value('justaplural.many', 'Many plurals')

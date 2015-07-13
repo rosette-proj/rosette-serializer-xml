@@ -144,11 +144,11 @@ module Rosette
         end
 
         def escape(text)
-          text.gsub!("\n", "\\n")                   # escape literal newlines
-          text.gsub!("\r", "\\r")                   # escape literal carriage returns
-          text.gsub!("\t", "\\t")                   # escape literal tabs
-          text.gsub!(/([^\\])(')/) { "#{$1}\\'" }   # escape single quotes
-          text.gsub!(/([^\\])(")/) { "#{$1}\\\"" }  # escape double quotes
+          text.gsub!("\n", "\\n")                    # escape literal newlines
+          text.gsub!("\r", "\\r")                    # escape literal carriage returns
+          text.gsub!("\t", "\\t")                    # escape literal tabs
+          text.gsub!(/([^\\]?)(')/) { "#{$1}\\'" }   # escape single quotes
+          text.gsub!(/([^\\]?)(")/) { "#{$1}\\\"" }  # escape double quotes
 
           coder.encode(text)
         end
