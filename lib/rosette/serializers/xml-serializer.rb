@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+require 'htmlentities'
+require 'ext/htmlentities/android_xml'
 require 'xml-write-stream'
 require 'rosette/serializers/serializer'
 
@@ -83,7 +85,7 @@ module Rosette
           writer.open_tag(:plurals, name: name)
 
           plural_forms.each_pair do |quantity, value|
-            writer.open_tag(:item, quantity: quantity)
+            writer.open_single_line_tag(:item, quantity: quantity)
             write_text(value)
             writer.close_tag
           end
@@ -96,7 +98,7 @@ module Rosette
           count = array_elements.keys.max
 
           (0..count).each do |i|
-            writer.open_tag(:item)
+            writer.open_single_line_tag(:item)
             write_text(array_elements[i] || '')
             writer.close_tag
           end
@@ -117,15 +119,15 @@ module Rosette
         end
 
         def write_string(key, value)
-          writer.open_tag(:string, name: key)
+          writer.open_single_line_tag(:string, name: key)
           write_text(value)
           writer.close_tag
         end
 
         def write_text(text)
-          escaped_text = text.gsub('"', '\"')
+          escaped_text = escape(text)
           writer.write_text(
-            "\"#{escaped_text}\"", escape: false
+            escaped_text, escape: false
           )
         end
 
@@ -139,6 +141,20 @@ module Rosette
           else
             :string
           end
+        end
+
+        def escape(text)
+          text.gsub!("\n", "\\n")                   # escape literal newlines
+          text.gsub!("\r", "\\r")                   # escape literal carriage returns
+          text.gsub!("\t", "\\t")                   # escape literal tabs
+          text.gsub!(/([^\\])(')/) { "#{$1}\\'" }   # escape single quotes
+          text.gsub!(/([^\\])(")/) { "#{$1}\\\"" }  # escape double quotes
+
+          coder.encode(text)
+        end
+
+        def coder
+          @coder ||= HTMLEntities::AndroidXmlEncoder.new
         end
       end
     end
