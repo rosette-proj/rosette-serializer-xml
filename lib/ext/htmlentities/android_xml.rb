@@ -17,7 +17,7 @@ class HTMLEntities
     # had to adjust this so that single and double quotes don't get turned into
     # entities (they're escaped by hand with backslashes)
     def basic_entity_regexp
-      @basic_entity_regexp ||= /[<>&]/
+      @basic_entity_regexp ||= /[&]/
     end
   end
 end

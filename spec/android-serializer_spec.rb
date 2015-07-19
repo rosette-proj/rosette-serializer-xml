@@ -95,6 +95,21 @@ describe XmlSerializer::AndroidSerializer do
     ).strip)
   end
 
+  it "doesn't escape html elements" do
+    result = serialize do
+      serializer.write_key_value('captain', "<b>Jean Luc</b> Picard")
+    end
+
+    expect(result).to eq(YAML.load(<<-EOM
+      |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <resources>
+            <string name="captain"><b>Jean Luc</b> Picard</string>
+        </resources>
+      EOM
+    ).strip)
+  end
+
   it 'escapes double quotes' do
     result = serialize do
       serializer.write_key_value('wow', 'And I said "cool"')
