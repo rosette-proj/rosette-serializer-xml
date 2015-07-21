@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 require 'htmlentities'
-require 'ext/htmlentities/android_xml'
+require 'ext/htmlentities/android_xml_encoder'
 require 'xml-write-stream'
 require 'rosette/serializers/serializer'
 
